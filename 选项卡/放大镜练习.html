@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="xxx">
+        <div class="pc1">
+            <img id="pc1Img" src="./banner1.jpg" alt="">
+            <div class="mask"></div>
+        </div>
+        <div class="pc2">
+            <img id="pc2Img" src="./banner1.jpg" alt="">
+        </div>
+    </div>
+
+    <select name="" id="imageSelector">
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+
+    <select name="" id="Multiplier">
+        <option value="2">2</option>
+        <option value="4">4</option>
+    </select>
+
+    <style>
+        .xxx{
+            display: flex;
+        }
+        .pc1{
+            width: 400px;
+            height: 400px;
+            position: relative;
+        }
+        .pc1 img{
+            width: 100%;
+        }
+        .mask{
+            width: 200px;
+            height: 200px;
+            background-image: url("./mask-bg.png");
+            position: absolute;
+            top: 200px;
+            left: 200px;
+        }
+        .pc1:hover{
+            cursor: zoom-in;
+        }
+        .pc2{
+            width: 400px;
+            height: 400px;
+            margin-left: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .pc2 img{
+            width: 200%;
+            position: absolute;
+            top: -400px;
+            left: -400px;
+        }
+    </style>
+
+    <script>
+        var pc1 = document.querySelector(".pc1");
+        var mask = document.querySelector(".mask");
+        var pc2 = document.querySelector(".pc2 img");
+        var pc1Img = document.querySelector(".pc1 img");
+        var pc2Img = document.querySelector(".pc2 img");
+        var imageSelector = document.getElementById("imageSelector");
+        var bsSelector = document.getElementById("Multiplier");
+        var bsValue = document.getElementById('Multiplier').value;
+
+        pc1.onmousemove = function (event){
+            var x = event.clientX - pc1.offsetLeft;
+            var y = event.clientY - pc1.offsetTop;
+            // console.log(bsValue);
+            // console.log(x, y);
+            // if(selectedValue=4){
+            // mask.style.Width="100px";
+            // mask.style.Height="100px";
+            // mask.style.top="0px";
+            // mask.style.left="0px";
+            // pc2Img.style.Width="400%";
+            // pc2Img.style.top="0px";
+            // pc2Img.style.left="0px";
+            // }
+            // if(selectedValue=2){
+            // mask.style.Width="200px";
+            // mask.style.Height="200px";
+            // mask.style.top="200px";
+            // mask.style.left="200px";
+            // pc2Img.style.Width="200%";
+            // pc2Img.style.top="-400px";
+            // pc2Img.style.left="-400px";
+
+            // }
+
+            maskX = x - 1/bsValue*200;
+            maskY = y - 1/bsValue*200;
+            if (maskX < 0) {
+                maskX = 0;
+            }
+            if (maskX > pc1.offsetWidth - mask.offsetWidth) {
+                maskX = pc1.offsetWidth - mask.offsetWidth;
+            }
+            if (maskY < 0) {
+                maskY = 0;
+            }
+            if (maskY > pc1.offsetHeight - mask.offsetHeight) {
+                maskY = pc1.offsetHeight - mask.offsetHeight;
+            }
+
+            mask.style.left = maskX + "px";
+            mask.style.top = maskY + "px";
+
+            pc2.style.left = -maskX * bsValue + "px";
+            pc2.style.top = -maskY * bsValue + "px";
+        };
+
+        //图片选择器随着数字变动更改
+        imageSelector.onchange = function() {
+        //选择数字变成现在的数字
+        var selectedValue = this.value;
+        if (selectedValue) {
+            // 图片通过修改图片名bannner的编号来实现
+            pc1Img.src = './banner' + selectedValue + '.jpg';
+            pc2Img.src = './banner' + selectedValue + '.jpg';
+        }
+    };
+        bsSelector.onchange = function(){
+        var bssValue = this.value;
+            switch(bssValue){
+                case 2:
+                    mask.style.Width="200px";
+                    mask.style.Height="200px";
+                    // mask.style.top="200px";
+                    // mask.style.left="200px";
+                    // pc2Img.style.Width="200%";
+                    // pc2Img.style.top="-400px";
+                    // pc2Img.style.left="-400px";
+                    // console.log(bsValue);
+                    break;
+                case 4:
+                    mask.style.Width="100px";
+                    mask.style.Height="100px";
+                    // mask.style.top="0px";
+                    // mask.style.left="0px";
+                    // pc2Img.style.Width="400%";
+                    // pc2Img.style.top="0px";
+                    // pc2Img.style.left="0px";
+                    // console.log(bsValue);
+                    break;
+                    
+            }
+        };
+        
+        
+        // Multiplier.onchange = function(){
+        // var selectedValue = this.value;
+        // if(selectedValue=4){
+        //     mask.style.Width="100px";
+        //     mask.style.Height="100px";
+        //     pc2Img.style.Width="200%";
+        //     pc2Img.style.top="0";
+        //     pc2Img.style.left="0";
+        // }
+        // }
+
+    </script>
+</body> 
+</html>
